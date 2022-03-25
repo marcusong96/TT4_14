@@ -154,6 +154,7 @@ export const LatestOrders = (props) => (
         endIcon={<ArrowRightIcon fontSize="small" />}
         size="small"
         variant="text"
+        href='/customers'
       >
         View all
       </Button>
