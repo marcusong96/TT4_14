@@ -11,19 +11,30 @@ var usersDB = {
       if (err) {
         console.log('[Connection] error: ' + err);
 
-        return callback(err, null);
+        return callback(err, null, null);
       } else {
         console.log('[Connection] success');
 
         var sqlStr = "SELECT * FROM users WHERE email = ? AND password = ?"
         conn.query(sqlStr, [email, password], (err, result) => {
-          conn.end();
           if (err) {
+            conn.end()
             console.log('[login] error');
-            return callback(err, null);
+            return callback(err, null, null);
           } else {
             console.log('[login] success');
-            return callback(null, result);
+            var customerSQL = "SELECT * FROM customer where UserId = ?";
+            conn.query(customerSQL, [result[0].UserId], (errCust, resultCust) => {
+              conn.end()
+              if(errCust) {
+                console.log('[customer] Retrieve customer info not found');
+                return callback(errCust, null, null);
+              }
+              else 
+              {
+                return callback(null, resultCust, result);
+              }
+            })
           }
         })
       }
