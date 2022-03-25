@@ -87,12 +87,6 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                   Transaction Date
                 </TableCell>
                 <TableCell>
-                  Application Status
-                </TableCell>
-                <TableCell>
-                  Repayment Status
-                </TableCell>
-                <TableCell>
                   Transaction ID
                 </TableCell>
               </TableRow>
@@ -128,12 +122,6 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                   </TableCell>
                   <TableCell>
                     {format(customer.createdAt, 'dd/MM/yyyy')}
-                  </TableCell>
-                  <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                  </TableCell>
-                  <TableCell>
-                    {customer.phone}
                   </TableCell>
                   <TableCell>
                     {customer.id}
