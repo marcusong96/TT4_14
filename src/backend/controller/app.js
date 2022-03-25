@@ -91,12 +91,15 @@ function verifyToken(req, res, next) {
 
 
 app.get('/get_balance', function (req, res) {
+  // temp solution before session is done
+  var customerId = req.fields.customerId;
+
   if (typeof (request.session) === 'undefined') {
-    customerDB.getBalance(1, function (err, result) {
+    customerDB.getBalance(customerId, function (err, result) {
       if (!err) {
         res.status(200).send({
           message: "Balance retrieved",
-          balance: balance
+          balance: result[0].balance
         })
       }
       else {
