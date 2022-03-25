@@ -30,7 +30,7 @@ export const CustomerListToolbar = (props) => (
       </Typography>
       <Box sx={{ m: 1 }}>
         <Button
-          color="success"
+          color="primary"
           variant="contained"
         >
           New Loan
@@ -55,7 +55,7 @@ export const CustomerListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Search customer"
+              placeholder="Search Loans"
               variant="outlined"
             />
           </Box>
