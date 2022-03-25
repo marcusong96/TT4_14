@@ -32,6 +32,7 @@ export const CustomerListToolbar = (props) => (
         <Button
           color="primary"
           variant="contained"
+          href="/settings"
         >
           New Loan
         </Button>
