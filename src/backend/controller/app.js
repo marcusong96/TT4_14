@@ -62,7 +62,6 @@ app.post('/login', (request, response) => {
         response.status(403).send({ message: "Wrong email/password" });
       } else {
         console.log('[app] admin logged in');
-        req.role = result[0].role;
         request.session.userID = result[0].UserId
         request.session.customerID = resultCust[0].CustomerId
         console.log(request.session)
@@ -132,5 +131,26 @@ app.post('/create_loan', function (req, res) {
     }
   });
 });
+
+app.post('/create_payment', function (req, res) {
+  var { loanId, payment_date, payment_amount } = req.fields;
+  customerLoanDB.createPayment(loanId, payment_date, payment_amount, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else if (result.affectedRows > 0) {
+      res.status(201).send({
+        message: "Payment " + result.insertId + " created.",
+        paymentId: result.insertId,
+        payment_date: payment_date,
+        payment_amount: payment_amount
+      });
+    } else {
+      res.status(201).send({
+        message: "No loans created"
+      });
+    }
+  });
+})
 
 module.exports = app;

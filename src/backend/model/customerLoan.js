@@ -127,6 +127,30 @@ var customerLoanDB = {
       }
     })
   },
+  createPayment: (loanId, payment_date, payment_amount, callback) => {
+    var conn = dbConnection.getConnection();
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error: ' + err);
+
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+
+        var sqlStr = "INSERT INTO `payment` (`loanId`, `payment_date`, `payment_amount`) VALUES (?, ?, ?)"
+        conn.query(sqlStr, [loanId, payment_date, payment_amount], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[createPayment] error');
+            return callback(err, null);
+          } else {
+            console.log('[createPayment] success');
+            return callback(null, result);
+          }
+        })
+      }
+    })
+  }
 
 }
 
