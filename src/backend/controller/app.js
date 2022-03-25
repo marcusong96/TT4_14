@@ -8,7 +8,8 @@ var app = express();
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const secretKey = '1234566789';
-var session = require('express-session')
+var session = require('express-session');
+const { request } = require('express');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(formidable());
@@ -90,16 +91,22 @@ function verifyToken(req, res, next) {
 
 
 app.get('/get_balance', function (req, res) {
-  console.log(req.fields);
-  usersDB.getBalance(req.fields.customerId, function (err, result) {
-    if (!err) {
-      res.status(200).send({ result: result })
-    }
-    else {
-      console.log(err);
-      res.status(500).send("Some error");
-    }
-  });
+  if(typeof(request.session) === 'undefined')
+  {
+    usersDB.getBalance(1, function (err, result) {
+      if (!err) {
+        res.status(200).send({ result: result })
+      }
+      else {
+        console.log(err);
+        res.status(500).send("Some error");
+      }
+    });
+  }
+  else 
+  {
+    res.status(403).send({ message: "Customer Information not found or Unauthenticated" });
+  }
 });
 
 app.post('/create_loan', function (req, res) {
