@@ -61,6 +61,14 @@ const Payment = () => {
                 Pay Outstanding Loans
               </Typography>
             </Box>
+            <Box sx={{ my: 3 }}>
+              <Typography
+                color="textSecondary"
+                variant="h5"
+              >
+                Outstanding amount: $23,032
+              </Typography>
+            </Box>
             <TextField
               error={Boolean(formik.touched.amount && formik.errors.amount)}
               fullWidth
