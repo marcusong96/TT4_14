@@ -92,7 +92,7 @@ export const LoanHistory = (props) => (
                 Amount
               </TableCell>
               <TableCell>
-                Customer
+                Transaction ID
               </TableCell>
               <TableCell sortDirection="desc">
                 <Tooltip
@@ -122,7 +122,7 @@ export const LoanHistory = (props) => (
                   {'$' + order.amount}
                 </TableCell>
                 <TableCell>
-                  {order.customer.name}
+                  {order.id}
                 </TableCell>
                 <TableCell>
                   {format(order.createdAt, 'dd/MM/yyyy')}
