@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
-import { AccountProfile } from '../components/account/account-profile';
-import { AccountProfileDetails } from '../components/account/account-profile-details';
+import { PaymentProfile } from '../components/payment/payment-profile';
+import { PaymentProfileDetails } from '../components/payment/payment-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const Account = () => (
+const Payment = () => (
   <>
     <Head>
       <title>
-        Account | Material Kit
+        Payment for outstanding loans | Loan Management
       </title>
     </Head>
     <Box
@@ -23,7 +23,7 @@ const Account = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          Account
+          Payment for outstanding loans
         </Typography>
         <Grid
           container
@@ -35,7 +35,7 @@ const Account = () => (
             md={6}
             xs={12}
           >
-            <AccountProfile />
+            <PaymentProfile />
           </Grid>
           <Grid
             item
@@ -43,7 +43,7 @@ const Account = () => (
             md={6}
             xs={12}
           >
-            <AccountProfileDetails />
+            <PaymentProfileDetails />
           </Grid>
         </Grid>
       </Container>
@@ -51,10 +51,10 @@ const Account = () => (
   </>
 );
 
-Account.getLayout = (page) => (
+Payment.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default Account;
+export default Payment;
