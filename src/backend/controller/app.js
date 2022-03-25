@@ -50,22 +50,22 @@ app.use(session({
 //   }
 // })
 
-app.post('/login', (request, response) => { 
+app.post('/login', (request, response) => {
   const email = request.fields.email;
   const password = request.fields.password;
-  usersDB.login(email, password, (err, resultCust, result ) => {
+  usersDB.login(email, password, (err, resultCust, result) => {
     if (err) {
       response.status(500).send(err);
     } else {
       if (!result[0]) {
         response.status(403).send({ message: "Wrong email/password" });
       } else {
-        // console.log('[app] admin logged in');
-        // req.role = result[0].role;
+        console.log('[app] admin logged in');
+        req.role = result[0].role;
         request.session.userID = result[0].UserId
         request.session.customerID = resultCust[0].CustomerId
         console.log(request.session)
-        response.status(200).send({ message: "Welcome "+result[0].email})
+        response.status(200).send({ message: "Welcome " + result[0].email })
       }
     }
   });
@@ -90,10 +90,12 @@ function verifyToken(req, res, next) {
 
 
 app.get('/get_balance', function (req, res) {
-  console.log(req.fields);
-  usersDB.getBalance(req.fields.customerId, function (err, result) {
+  customerDB.getBalance(req.fields.customerId, function (err, result) {
     if (!err) {
-      res.status(200).send({ result: result })
+      res.status(200).send({
+        message: "Balance retrieved",
+        balance: balance
+      })
     }
     else {
       console.log(err);
@@ -103,27 +105,23 @@ app.get('/get_balance', function (req, res) {
 });
 
 app.post('/create_loan', function (req, res) {
-  customerLoanDB.createLoan(req.fields.cusomterId, req.fields.loanId, function (err, result) {
-    if (!err) {
-      res.status(200).send({ result: result })
-    }
-    else {
+  var { customerId, loan_amount } = req.fields;
+  customerLoanDB.createLoan(customerId, loan_amount, function (err, result) {
+    if (err) {
       console.log(err);
-      res.status(500).send("Some error");
+      res.status(500).send(err);
+    } else if (result.affectedRows > 0) {
+      res.status(201).send({
+        message: "Loan " + result.insertId + " created.",
+        customerId: customerId,
+        loan_amount: loan_amount
+      });
+    } else {
+      res.status(201).send({
+        message: "No loans created"
+      });
     }
   });
-});
-
-app.get('/retrieveLoanList', (request, response) => {
-  if(request.session.customerID)
-  {
-    customerID = request.session.customerID
-
-  }
-  else 
-  {
-    response.status(403).send({ message: "Unauthenticated or Customer information not found." })
-  }
 });
 
 module.exports = app;

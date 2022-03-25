@@ -53,7 +53,11 @@ var customerLoanDB = {
       }
     })
   },
-  createLoan: (customerId, loanId, loan_amount, callback) => {
+  createLoan: (customerId, loan_amount, callback) => {
+    // create loan id with loan_amount into loan table
+    // link customer id with the newly created loan id
+    // update balance in customer
+
     var conn = dbConnection.getConnection();
     conn.connect(function (err) {
       if (err) {
@@ -62,26 +66,40 @@ var customerLoanDB = {
         return callback(err, null);
       } else {
         console.log('[Connection] success');
-        var sqlStr = "INSERT INTO `customerLoan` (`CustomerId`, `LoanId`) VALUES (?,?)";
-        conn.query(sqlStr, [customerId, loanId], (err, result) => {
-          conn.end();
-          if (err) {
-            console.log('[createLoan] error');
-            return callback(err, null);
+        var sqlStr = "INSERT INTO `loan` (`loan_amount`) VALUES (?)";
+        conn.query(sqlStr, [loan_amount], (loanErr, loanResult) => {
+          // conn.end();
+          if (loanErr) {
+            console.log('[createLoan] insert into loan error');
+            return callback(loanErr, null);
           } else {
-            console.log('[createLoan] result: ' + customerId);
-            var sqlStr = "INSERT INTO `loan` (`LoanId`, `loan_amount`) VALUES (?,?)";
-            conn.query(sqlStr, [loanId, loan_amount], (err, result) => {
-              conn.end();
-              if (err) {
-                console.log('[createLoan] error');
-                return callback(err, null);
+            console.log('[createLoan] insert into loan success insertId: ', loanResult.insertId);
+
+            var sqlStr = "INSERT INTO `customerloan` (`customerId`, `loanId`) VALUES (?,?);";
+
+            conn.query(sqlStr, [customerId, loanResult.insertId], (customerLoanErr, customerLoanResult) => {
+              // conn.end();
+              if (customerLoanErr) {
+                console.log('[createLoan] insert into customerloan error');
+                return callback(customerLoanErr, null);
               } else {
-                console.log('[createLoan] result: ' + customerId);
-                return callback(null, result);
+                console.log('[createLoan] insert into customerloan success insertId: ', customerLoanResult.insertId);
+
+                var sqlStr = "UPDATE `customer` SET balance = (select sum(loan_amount) from loan inner join customerloan on loan.LoanId = customerloan.LoanId where CustomerId = ?) WHERE customerId = ?;";
+                conn.query(sqlStr, [customerId, customerId], (customerErr, customerResult) => {
+                  conn.end();
+                  if (customerErr) {
+                    console.log('[createLoan] update into customer error');
+                    return callback(customerErr, null);
+                  } else {
+                    console.log('[createLoan] update into customer success');
+                    //return callback(null, customerResult);
+                  }
+                });
+                //return callback(null, customerLoanResult);
               }
             });
-            return callback(null, result);
+            return callback(null, loanResult);
           }
         });
       }

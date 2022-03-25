@@ -52,6 +52,32 @@ var customerDB = {
         })
       }
     })
+  },
+  getBalance: function (customerId, callback) {
+    var conn = dbConnection.getConnection();
+    console.log('test');
+    console.log(customerId);
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error');
+        console.log(err);
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+
+        var sqlStr = "SELECT balance FROM customer WHERE customerId = ?";
+        conn.query(sqlStr, [customerId], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[getBalance] error');
+            return callback(err, null);
+          } else {
+            console.log('[getBalance] result: ' + customerId);
+            return callback(null, result);
+          }
+        });
+      }
+    })
   }
 }
 
