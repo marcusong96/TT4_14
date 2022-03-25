@@ -8,7 +8,7 @@ const Account = () => (
   <>
     <Head>
       <title>
-        Account | Loan Management System
+        Payment | Loan Management System
       </title>
     </Head>
     <Box
