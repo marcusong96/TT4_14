@@ -80,6 +80,7 @@ var customerLoanDB = {
     })
   },
   createLoan: (customerId, loan_amount, callback) => {
+    console.log('[createLoan] called');
     var conn = dbConnection.getConnection();
     conn.connect(function (err) {
       if (err) {
@@ -128,6 +129,7 @@ var customerLoanDB = {
     })
   },
   createPayment: (loanId, payment_date, payment_amount, callback) => {
+    console.log('[createPayment] called');
     var conn = dbConnection.getConnection();
     conn.connect(function (err) {
       if (err) {
@@ -150,7 +152,34 @@ var customerLoanDB = {
         })
       }
     })
-  }
+  },
+  getCustomerPaymentListForCustomer: (customerId, callback) => {
+    console.log('[getCustomerPaymentListForCustomer] called');
+
+    var conn = dbConnection.getConnection();
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error: ' + err);
+
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+
+        var sqlStr = "SELECT * FROM payment inner join loan on loan.LoanId = payment.loanId inner join customerLoan on customerLoan.loanId = loan.LoanId where customerId = ?"
+        conn.query(sqlStr, [customerId], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[getCustomerPaymentListForCustomer] error');
+            return callback(err, null);
+          } else {
+            console.log('[getCustomerPaymentListForCustomer] success');
+            return callback(null, result);
+          }
+        })
+      }
+    })
+  },
+
 
 }
 

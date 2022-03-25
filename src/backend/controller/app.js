@@ -98,7 +98,30 @@ app.get('/get_balance', function (req, res) {
       if (!err) {
         res.status(200).send({
           message: "Balance retrieved",
-          balance: result[0].balance
+          balance: result
+        })
+      }
+      else {
+        console.log(err);
+        res.status(500).send("Some error");
+      }
+    });
+  }
+  else {
+    res.status(403).send({ message: "Customer Information not found or Unauthenticated" });
+  }
+});
+
+app.get('/get_payments', function (req, res) {
+  // temp solution before session is done
+  var customerId = req.fields.customerId;
+
+  if (typeof (request.session) === 'undefined') {
+    customerLoanDB.getCustomerPaymentListForCustomer(customerId, function (err, result) {
+      if (!err) {
+        res.status(200).send({
+          message: "Payments retrieved",
+          payment: result
         })
       }
       else {
