@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
-import { CustomerListResults } from '../components/customer/customer-list-results';
-import { CustomerListToolbar } from '../components/customer/customer-list-toolbar';
+import { ApplyloanListResults } from '../components/applyloan/applyloan-list-results';
+import { ApplyloanListToolbar } from '../components/applyloan/applyloan-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { customers } from '../__mocks__/customers';
+import { applyloan } from '../__mocks__/applyloan';
 
-const Customers = () => (
+const Applyloan = () => (
   <>
     <Head>
       <title>
@@ -20,18 +20,18 @@ const Customers = () => (
       }}
     >
       <Container maxWidth={false}>
-        <CustomerListToolbar />
+        <ApplyloanListToolbar />
         <Box sx={{ mt: 3 }}>
-          <CustomerListResults customers={customers} />
+          <ApplyloanListResults applyloan={applyloan} />
         </Box>
       </Container>
     </Box>
   </>
 );
-Customers.getLayout = (page) => (
+Loans.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default Customers;
+export default Loans;
