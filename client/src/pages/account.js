@@ -8,48 +8,68 @@ const Account = () => (
   <>
     <Head>
       <title>
-        Account | Loan Management System
+        Payment | Loan Management System
       </title>
     </Head>
     <Box
       component="main"
       sx={{
-        flexGrow: 1,
-        py: 8
-      }}
+        alignItems: 'center',
+          display: 'flex',
+          flexGrow: 1,
+          minHeight: '100%'
+        }}
     >
-      <Container maxWidth="lg">
-        <Typography
-          sx={{ mb: 3 }}
-          variant="h4"
-        >
-          Account
-        </Typography>
-        <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-          >
-            <AccountProfile />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={6}
-            xs={12}
-          >
-            <AccountProfileDetails />
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  </>
-);
+      <Container maxWidth="sm">
+        <form onSubmit={formik.handleSubmit}>
+            <Box sx={{ my: 3 }}>
+              <Typography
+                color="textPrimary"
+                variant="h4"
+              >
+                   Payment for outstanding Loan
+              </Typography>
+            </Box>
+            <TextField
+              error={Boolean(formik.touched.amount && formik.errors.amount)}
+              fullWidth
+              helperText={formik.touched.amount && formik.errors.amount}
+              label="Loan Amount"
+              margin="normal"
+              name="amount"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="number"
+              value={formik.values.amount}
+              variant="outlined"
+            />
+            <Box
+              sx={{
+                alignItems: 'center',
+                display: 'flex',
+                ml: -1
+              }}
+            >
+              <Checkbox
+                checked={formik.values.policy}
+                name="policy"
+                onChange={formik.handleChange}
+              />
+              <Typography
+                color="textSecondary"
+                variant="body2"
+              >
+                  
+         Submit Application
+              </Button>
+            </Box>
+          </form>
+        </Container>
+      </Box>
+    </>
+  );
+};
+
 
 Account.getLayout = (page) => (
   <DashboardLayout>
