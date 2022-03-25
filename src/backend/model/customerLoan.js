@@ -1,7 +1,7 @@
 var dbConnection = require('./databaseConfig.js');
 
 var customerLoanDB = {
-  getCustomerLoan: (customerId, loanId) => {
+  getCustomerLoan: (customerId, loanId, callback) => {
     console.log('[getCustomerLoan] called');
 
     var conn = dbConnection.getConnection();
@@ -27,7 +27,7 @@ var customerLoanDB = {
       }
     })
   },
-  getCustomerLoanList: () => {
+  getCustomerLoanList: (callback) => {
     console.log('[getCustomerLoanList] called');
 
     var conn = dbConnection.getConnection();
@@ -50,6 +50,40 @@ var customerLoanDB = {
             return callback(null, result);
           }
         })
+      }
+    })
+  },
+  createLoan: (customerId, loanId, loan_amount, callback) => {
+    var conn = dbConnection.getConnection();
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error');
+        console.log(err);
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+        var sqlStr = "INSERT INTO `customerLoan` (`CustomerId`, `LoanId`) VALUES (?,?)";
+        conn.query(sqlStr, [customerId, loanId], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[createLoan] error');
+            return callback(err, null);
+          } else {
+            console.log('[createLoan] result: ' + customerId);
+            var sqlStr = "INSERT INTO `loan` (`LoanId`, `loan_amount`) VALUES (?,?)";
+            conn.query(sqlStr, [loanId, loan_amount], (err, result) => {
+              conn.end();
+              if (err) {
+                console.log('[createLoan] error');
+                return callback(err, null);
+              } else {
+                console.log('[createLoan] result: ' + customerId);
+                return callback(null, result);
+              }
+            });
+            return callback(null, result);
+          }
+        });
       }
     })
   },

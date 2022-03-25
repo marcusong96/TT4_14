@@ -1,7 +1,7 @@
 var dbConnection = require('./databaseConfig.js');
 
 var customerDB = {
-  getCustomer: (customerId) => {
+  getCustomer: (customerId, callback) => {
     console.log('[getCustomer] called');
 
     var conn = dbConnection.getConnection();
@@ -27,7 +27,7 @@ var customerDB = {
       }
     })
   },
-  getCustomerList: () => {
+  getCustomerList: (callback) => {
     console.log('[getCustomerList] called');
 
     var conn = dbConnection.getConnection();
