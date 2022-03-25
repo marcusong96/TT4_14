@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Box, Container, Grid } from '@mui/material';
-import { LatestOrders } from '../components/dashboard/latest-orders';
-import { TotalProfit } from '../components/dashboard/total-profit';
+import { LoanHistory } from '../components/dashboard/loan-history';
+import { AccBalance } from '../components/dashboard/acc-balance';
 import { DashboardLayout } from '../components/dashboard-layout';
 
 const Dashboard = () => (
@@ -30,7 +30,7 @@ const Dashboard = () => (
             sm={12}
             xs={12}
           >
-            <TotalProfit sx={{ height: '100%' }} />
+            <AccBalance sx={{ height: '100%' }} />
           </Grid>
           <Grid
             item
@@ -39,7 +39,7 @@ const Dashboard = () => (
             xl={12}
             xs={12}
           >
-            <LatestOrders />
+            <LoanHistory />
           </Grid>
         </Grid>
       </Container>
