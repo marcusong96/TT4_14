@@ -431,14 +431,7 @@ const items = [
         icon: /*#__PURE__*/ jsx_runtime_.jsx(Users, {
             fontSize: "small"
         }),
-        title: 'Customers'
-    },
-    {
-        href: '/products',
-        icon: /*#__PURE__*/ jsx_runtime_.jsx(ShoppingBag, {
-            fontSize: "small"
-        }),
-        title: 'Products'
+        title: 'Loans'
     },
     {
         href: '/account',
@@ -467,14 +460,7 @@ const items = [
             fontSize: "small"
         }),
         title: 'Register'
-    },
-    {
-        href: '/404',
-        icon: /*#__PURE__*/ jsx_runtime_.jsx(XCircle, {
-            fontSize: "small"
-        }),
-        title: 'Error'
-    }
+    }, 
 ];
 const DashboardSidebar = (props)=>{
     const { open , onClose  } = props;

@@ -81,19 +81,19 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Amount
                 </TableCell>
                 <TableCell>
-                  Email
+                  Transaction Date
                 </TableCell>
                 <TableCell>
-                  Location
+                  Application Status
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Repayment Status
                 </TableCell>
                 <TableCell>
-                  Registration date
+                  Transaction ID
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -118,12 +118,6 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                         display: 'flex'
                       }}
                     >
-                      <Avatar
-                        src={customer.avatarUrl}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials(customer.name)}
-                      </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
@@ -133,7 +127,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {format(customer.createdAt, 'dd/MM/yyyy')}
                   </TableCell>
                   <TableCell>
                     {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
@@ -142,7 +136,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     {customer.phone}
                   </TableCell>
                   <TableCell>
-                    {format(customer.createdAt, 'dd/MM/yyyy')}
+                    {customer.id}
                   </TableCell>
                 </TableRow>
               ))}
