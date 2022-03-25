@@ -8,7 +8,6 @@ var app = express();
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const secretKey = '1234566789';
-const bodyParser = require('body-parser')
 var session = require('express-session')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
