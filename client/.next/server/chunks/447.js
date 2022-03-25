@@ -441,13 +441,6 @@ const items = [
         title: 'Account'
     },
     {
-        href: '/settings',
-        icon: /*#__PURE__*/ jsx_runtime_.jsx(Cog, {
-            fontSize: "small"
-        }),
-        title: 'Settings'
-    },
-    {
         href: '/login',
         icon: /*#__PURE__*/ jsx_runtime_.jsx(Lock, {
             fontSize: "small"
