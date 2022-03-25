@@ -28,10 +28,11 @@ const items = [
     title: 'Loans'
   },
   {
-    href: '/account',
-    icon: (<UserIcon fontSize="small" />),
-    title: 'Account'
+    href: '/payments',
+    icon: (<ShoppingBagIcon fontSize="small" />),
+    title: 'Pay Loans'
   },
+
   {
     href: '/login',
     icon: (<LockIcon fontSize="small" />),

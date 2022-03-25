@@ -434,11 +434,11 @@ const items = [
         title: 'Loans'
     },
     {
-        href: '/account',
-        icon: /*#__PURE__*/ jsx_runtime_.jsx(User, {
+        href: '/payments',
+        icon: /*#__PURE__*/ jsx_runtime_.jsx(ShoppingBag, {
             fontSize: "small"
         }),
-        title: 'Account'
+        title: 'Pay Loans'
     },
     {
         href: '/login',

@@ -5,6 +5,7 @@
   "/customers": "pages/customers.html",
   "/": "pages/index.html",
   "/login": "pages/login.html",
+  "/payments": "pages/payments.html",
   "/register": "pages/register.html",
   "/settings": "pages/settings.html",
   "/_error": "pages/_error.js",
