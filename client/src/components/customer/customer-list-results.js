@@ -116,7 +116,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {'$' + customer.amount}
                       </Typography>
                     </Box>
                   </TableCell>

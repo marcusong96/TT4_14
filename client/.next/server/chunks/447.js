@@ -505,7 +505,7 @@ const DashboardSidebar = (props)=>{
                             sx: {
                                 px: 2
                             },
-                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(material_.Box, {
+                            children: /*#__PURE__*/ jsx_runtime_.jsx(material_.Box, {
                                 sx: {
                                     alignItems: 'center',
                                     backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -516,22 +516,13 @@ const DashboardSidebar = (props)=>{
                                     py: '11px',
                                     borderRadius: 1
                                 },
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                        children: /*#__PURE__*/ jsx_runtime_.jsx(material_.Typography, {
-                                            color: "inherit",
-                                            variant: "subtitle1",
-                                            children: "Acme Inc"
-                                        })
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx(Selector, {
-                                        sx: {
-                                            color: 'neutral.500',
-                                            width: 14,
-                                            height: 14
-                                        }
+                                children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                    children: /*#__PURE__*/ jsx_runtime_.jsx(material_.Typography, {
+                                        color: "inherit",
+                                        variant: "subtitle1",
+                                        children: "John Tan"
                                     })
-                                ]
+                                })
                             })
                         })
                     ]
