@@ -1,10 +1,8 @@
 var dbConnection = require('./databaseConfig.js');
 
-var usersDB = {
-  login: (email, password, callback) => {
-    console.log('[login] called');
-    console.log('[login] email: ' + email);
-    console.log('[login] password: ' + password);
+var customerLoanDB = {
+  getCustomerLoan: (customerId, loanId) => {
+    console.log('[getCustomerLoan] called');
 
     var conn = dbConnection.getConnection();
     conn.connect(function (err) {
@@ -15,46 +13,47 @@ var usersDB = {
       } else {
         console.log('[Connection] success');
 
-        var sqlStr = "SELECT * FROM users WHERE email = ? AND password = ?"
-        conn.query(sqlStr, [email, password], (err, result) => {
+        var sqlStr = "SELECT * FROM customerloan WHERE customerId = ? AND loanId = ?"
+        conn.query(sqlStr, [customerId, loanId], (err, result) => {
           conn.end();
           if (err) {
-            console.log('[login] error');
+            console.log('[getCustomerLoan] error');
             return callback(err, null);
           } else {
-            console.log('[login] success');
+            console.log('[getCustomerLoan] success');
             return callback(null, result);
           }
         })
       }
     })
   },
-  getBalance: function (customerId, callback) {
+  getCustomerLoanList: () => {
+    console.log('[getCustomerLoanList] called');
+
     var conn = dbConnection.getConnection();
-    console.log('test');
-    console.log(customerId);
     conn.connect(function (err) {
       if (err) {
-        console.log('[Connection] error');
-        console.log(err);
+        console.log('[Connection] error: ' + err);
+
         return callback(err, null);
       } else {
         console.log('[Connection] success');
 
-        var sqlStr = "SELECT balance FROM customer WHERE customerId = ?";
+        var sqlStr = "SELECT * FROM customerloan"
         conn.query(sqlStr, [customerId], (err, result) => {
           conn.end();
           if (err) {
-            console.log('[getBalance] error');
+            console.log('[getCustomerLoanList] error');
             return callback(err, null);
           } else {
-            console.log('[getBalance] result: ' + customerId);
+            console.log('[getCustomerLoanList] success');
             return callback(null, result);
           }
-        });
+        })
       }
     })
-  }
+  },
+
 }
 
-module.exports = usersDB;
+module.exports = customerLoanDB;
