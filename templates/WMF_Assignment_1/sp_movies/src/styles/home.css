@@ -1,0 +1,62 @@
+#movielist_container > .row {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+
+#movielist_container > .row > * {
+  width: 20%;
+}
+
+#movielist_container > #scroller_container {
+  min-width: 100%;
+  min-height: 350px;
+}
+
+#movielist_container > #scroller_container > #image_container > a > img {
+  max-height: 300px;
+}
+
+#scroller_container {
+  z-index: 100;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+#image_container {
+  position: relative;
+  transition: 0.2s;
+}
+
+#image_container:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+#image_container:hover #image_text {
+  opacity: 1;
+}
+
+#image_text {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  width: 100%;
+  transition: 0.5s ease;
+  opacity: 0;
+  bottom: 0;
+  font-size: 15px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 40px;
+  bottom: 0;
+  border-bottom-left-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+#top_alert {
+  position: absolute;
+  top: 12%;
+  z-index: 100;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

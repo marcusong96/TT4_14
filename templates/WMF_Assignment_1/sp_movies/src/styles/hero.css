@@ -1,0 +1,39 @@
+#hero_image {
+  position: relative;
+  height: 350px;
+  overflow: hidden;
+  background: url("../img/hero_img.jpeg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#hero_container {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#hero_container h1 {
+  letter-spacing: 0.2em;
+}
+
+#hero_title {
+  border: 10px solid white;
+  padding: 6px 14px;
+  display: inline-block;
+}
+
+#hero_desc {
+  margin: 20px;
+  display: block;
+  font-size: 26px;
+  text-shadow: 0 0 10px black;
+  text-align: center;
+}
