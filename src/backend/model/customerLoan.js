@@ -53,6 +53,32 @@ var customerLoanDB = {
       }
     })
   },
+  getCustomerLoanListForCustomer: (customerId, callback) => {
+    console.log('[getCustomerLoanListForCustomer] called');
+
+    var conn = dbConnection.getConnection();
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error: ' + err);
+
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+
+        var sqlStr = "SELECT * FROM customerloan WHERE customerId = ?"
+        conn.query(sqlStr, [customerId], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[getCustomerLoanListForCustomer] error');
+            return callback(err, null);
+          } else {
+            console.log('[getCustomerLoanListForCustomer] success');
+            return callback(null, result);
+          }
+        })
+      }
+    })
+  },
   createLoan: (customerId, loanId, loan_amount, callback) => {
     var conn = dbConnection.getConnection();
     conn.connect(function (err) {
