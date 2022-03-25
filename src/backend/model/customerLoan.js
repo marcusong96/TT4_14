@@ -108,17 +108,17 @@ var customerLoanDB = {
               } else {
                 console.log('[createLoan] insert into customerloan success insertId: ', customerLoanResult.insertId);
 
-                var sqlStr = "UPDATE `customer` SET balance = (select sum(loan_amount) from loan inner join customerloan on loan.LoanId = customerloan.LoanId where CustomerId = ?) WHERE customerId = ?;";
-                conn.query(sqlStr, [customerId, customerId], (customerErr, customerResult) => {
-                  conn.end();
-                  if (customerErr) {
-                    console.log('[createLoan] update into customer error');
-                    return callback(customerErr, null);
-                  } else {
-                    console.log('[createLoan] update into customer success');
-                    //return callback(null, customerResult);
-                  }
-                });
+                // var sqlStr = "UPDATE `customer` SET balance = (select sum(loan_amount) from loan inner join customerloan on loan.LoanId = customerloan.LoanId where CustomerId = ?) WHERE customerId = ?;";
+                // conn.query(sqlStr, [customerId, customerId], (customerErr, customerResult) => {
+                //   conn.end();
+                //   if (customerErr) {
+                //     console.log('[createLoan] update into customer error');
+                //     return callback(customerErr, null);
+                //   } else {
+                //     console.log('[createLoan] update into customer success');
+                //     //return callback(null, customerResult);
+                //   }
+                // });
                 //return callback(null, customerLoanResult);
               }
             });
@@ -179,6 +179,33 @@ var customerLoanDB = {
       }
     })
   },
+  updateBalance: (customerId, callback) => {
+    console.log('[updateBalance] called');
+
+    var conn = dbConnection.getConnection();
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error: ' + err);
+
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+
+        var sqlStr = "UPDATE `customer` SET balance = (SELECT (sum(loan.loan_amount) - SUM(CAST(payment_amount AS CHAR(10)))) as balance FROM payment inner join loan on loan.LoanId = payment.loanId inner join customerLoan on customerLoan.loanId = loan.LoanId where customerId = ?) WHERE customerId = ?;"
+        conn.query(sqlStr, [customerId, customerId], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[updateBalance] error');
+            return callback(err, null);
+          } else {
+            console.log('[updateBalance] success');
+            console.log(result)
+            return callback(null, result);
+          }
+        })
+      }
+    })
+  }
 
 
 }

@@ -55,8 +55,6 @@ var customerDB = {
   },
   getBalance: function (customerId, callback) {
     var conn = dbConnection.getConnection();
-    console.log('test');
-    console.log(customerId);
     conn.connect(function (err) {
       if (err) {
         console.log('[Connection] error');

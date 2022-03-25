@@ -98,7 +98,7 @@ app.get('/get_balance', function (req, res) {
       if (!err) {
         res.status(200).send({
           message: "Balance retrieved",
-          balance: result
+          result: result
         })
       }
       else {
@@ -121,7 +121,7 @@ app.get('/get_payments', function (req, res) {
       if (!err) {
         res.status(200).send({
           message: "Payments retrieved",
-          payment: result
+          result: result
         })
       }
       else {
@@ -145,7 +145,8 @@ app.post('/create_loan', function (req, res) {
       res.status(201).send({
         message: "Loan " + result.insertId + " created.",
         customerId: customerId,
-        loan_amount: loan_amount
+        loan_amount: loan_amount,
+        result: result
       });
     } else {
       res.status(201).send({
@@ -166,7 +167,28 @@ app.post('/create_payment', function (req, res) {
         message: "Payment " + result.insertId + " created.",
         paymentId: result.insertId,
         payment_date: payment_date,
-        payment_amount: payment_amount
+        payment_amount: payment_amount,
+        result: result
+      });
+    } else {
+      res.status(201).send({
+        message: "No loans created"
+      });
+    }
+  });
+})
+
+app.put('/update_balance', function (req, res) {
+  var { customerId } = req.fields;
+  customerLoanDB.updateBalance(customerId, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else if (result.affectedRows > 0) {
+      res.status(201).send({
+        message: "CustomerId " + customerId + "'s balance updated",
+        customerId: customerId,
+        result: result
       });
     } else {
       res.status(201).send({
