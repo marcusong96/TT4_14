@@ -1,10 +1,49 @@
 import Head from 'next/head';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormHelperText,
+  Link,
+  TextField,
+  Typography
+ }  from '@mui/material';
 import { AccountProfile } from '../components/account/account-profile';
 import { AccountProfileDetails } from '../components/account/account-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const Account = () => (
+const Account = () => {
+  const router = useRouter();
+  const formik = useFormik({
+    initialValues: {
+      amount: '',
+      policy: false
+    },
+    validationSchema: Yup.object({
+      amount: Yup
+        .string()
+        .max(255)
+        .required(
+          'Please input your loan amount'),
+      policy: Yup
+        .boolean()
+        .oneOf(
+          [true],
+          'This field must be checked'
+        )
+    }),
+    onSubmit: () => {
+      router.push('/');
+    }
+  });
+
+  return (
   <>
     <Head>
       <title>
@@ -60,7 +99,7 @@ const Account = () => (
                 variant="body2"
               >
                   
-         Submit Application
+         Confirm Payment
               </Button>
             </Box>
           </form>
