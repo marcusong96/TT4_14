@@ -53,11 +53,33 @@ var customerLoanDB = {
       }
     })
   },
-  createLoan: (customerId, loan_amount, callback) => {
-    // create loan id with loan_amount into loan table
-    // link customer id with the newly created loan id
-    // update balance in customer
+  getCustomerLoanListForCustomer: (customerId, callback) => {
+    console.log('[getCustomerLoanListForCustomer] called');
 
+    var conn = dbConnection.getConnection();
+    conn.connect(function (err) {
+      if (err) {
+        console.log('[Connection] error: ' + err);
+
+        return callback(err, null);
+      } else {
+        console.log('[Connection] success');
+
+        var sqlStr = "SELECT * FROM customerloan WHERE customerId = ?"
+        conn.query(sqlStr, [customerId], (err, result) => {
+          conn.end();
+          if (err) {
+            console.log('[getCustomerLoanListForCustomer] error');
+            return callback(err, null);
+          } else {
+            console.log('[getCustomerLoanListForCustomer] success');
+            return callback(null, result);
+          }
+        })
+      }
+    })
+  },
+  createLoan: (customerId, loan_amount, callback) => {
     var conn = dbConnection.getConnection();
     conn.connect(function (err) {
       if (err) {
